@@ -260,6 +260,7 @@ INSTALLED_APPS = (
     'honeypot',
     'constance.backends.database',
     'constance',
+    'notification',
 
     # Our apps
     'versionutils.versioning',

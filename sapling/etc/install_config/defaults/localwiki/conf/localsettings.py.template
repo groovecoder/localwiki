@@ -20,6 +20,7 @@ CLOUDMADE_API_KEY = 'CLOUDMADEAPIKEYHERE'
 
 # For testing, you can start the python debugging smtp server like so:
 # sudo python -m smtpd -n -c DebuggingServer localhost:25
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 EMAIL_HOST = 'localhost'
 EMAIL_HOST_PASSWORD = ''
 EMAIL_PORT = 25

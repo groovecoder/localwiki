@@ -1,6 +1,7 @@
 from django.db.models import signals
 from django.contrib.auth.models import User, Group
 from django.conf import settings
+from django.utils.translation import ugettext_noop as _
 from guardian.management import create_anonymous_user
 
 from users import models as users_app
@@ -51,3 +52,15 @@ signals.post_syncdb.connect(add_all_users_to_group, sender=users_app,
 
 signals.post_syncdb.connect(create_banned_group, sender=users_app,
     dispatch_uid="users.management.create_banned_group")
+
+if 'notification' in settings.INSTALLED_APPS:
+    from notification.models import NoticeType
+
+    def create_notice_types(app, created_models, verbosity, **kwargs):
+        NoticeType.create("account_create", _("Account Created"),
+                          _("you have created an account"))
+
+    signals.post_syncdb.connect(create_notice_types, sender=users_app,
+        dispatch_uid="users.management.create_notice_types")
+else:
+    print "'notification' app not found - not creating NoticeTypes."
